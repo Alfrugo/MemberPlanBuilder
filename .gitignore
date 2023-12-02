@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+
+# Mac
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# Server-specific files
+server/config.js
+
+# Dependency directories
+jspm_packages/
+typings/
+
+# Optional: Visual Studio Code specific files
+.vscode/
+
+# Optional: macOS folder attributes
+.AppleDouble
+.DS_Store
+
+.env

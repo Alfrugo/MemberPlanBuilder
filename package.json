@@ -1,0 +1,15 @@
+{
+  "name": "memberplancreator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "memberplanbuilder"
+  },
+  "author": "Alfredo Diez",
+  "license": "ISC"
+}
