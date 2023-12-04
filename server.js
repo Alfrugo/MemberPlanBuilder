@@ -65,6 +65,25 @@ app.post("/createPlan", (req, res) => {
   res.json({ message: "Plan created successfully", newPlan });
 });
 
+app.get("/displayPlans", (req, res) => {
+  const jsonFilePath = path.join(
+    __dirname,
+    "public",
+    "html-plans",
+    "output-format.json"
+  );
+
+  try {
+    const jsonDataString = fs.readFileSync(jsonFilePath, "utf-8");
+    const jsonData = JSON.parse(jsonDataString);
+
+    res.render("displayPlans", { plans: jsonData.plans });
+  } catch (error) {
+    console.error("Error reading output-format.json:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
