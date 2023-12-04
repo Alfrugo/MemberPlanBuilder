@@ -6,17 +6,8 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-// Set up EJS as the view engine
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
-
 app.use(bodyParser.json());
 app.use(express.static("public"));
-
-// Replace the static HTML endpoint with EJS rendering
-app.get("/createPlan", (req, res) => {
-  res.render("createPlan");
-});
 
 app.post("/createPlan", (req, res) => {
   const { Code, HTML, Title, Url, ZipCode } = req.body;
