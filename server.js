@@ -12,7 +12,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Add the following line for parsing urlencoded data
 app.use(bodyParser.urlencoded({ extended: true }));
