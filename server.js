@@ -3,9 +3,14 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
+require("dotenv").config();
 
 const app = express();
 const PORT = 3000;
+
+const SECRET_KEY = process.env.SECRET_KEY;
+const USERNAME = process.env.USERNAME;
+const PASSWORD = process.env.PASSWORD;
 
 // Set up EJS as the view engine
 app.set("view engine", "ejs");
@@ -20,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use express-session middleware for session management
 app.use(
   session({
-    secret: "your-secret-key", // Replace with a secure secret key
+    secret: SECRET_KEY, // Replace with a secure secret key
     resave: false,
     saveUninitialized: true,
   })
@@ -49,7 +54,7 @@ app.post("/login", (req, res) => {
   console.log('Received credentials:', username, password);
 
   // Check if the provided username and password match your authentication logic
-  if (username === "test" && password === "test") {
+  if (username === USERNAME && password === PASSWORD) {
     // Set the username in the session to mark the user as authenticated
     req.session.username = username;
     res.redirect("/loggedin");
