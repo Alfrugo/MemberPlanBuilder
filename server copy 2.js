@@ -127,41 +127,17 @@ app.post("/deletePlan", isAuthenticated, (req, res) => {
   try {
     let jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
 
-    // Find the plan to delete
-    const deletedPlan = jsonData.plans.find((plan) => plan.Code === codeToDelete);
-
-    if (!deletedPlan) {
-      return res.status(404).json({ error: `Plan with code ${codeToDelete} not found` });
-    }
-
     // Filter out the plan to delete
     jsonData.plans = jsonData.plans.filter((plan) => plan.Code !== codeToDelete);
 
-    // Delete the HTML file
-    const htmlFilePath = path.join(
-      __dirname,
-      "public",
-      "html-plans",
-      `plan-${codeToDelete}.html`
-    );
+    fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2), "utf-8");
 
-    fs.unlink(htmlFilePath, (unlinkError) => {
-      if (unlinkError) {
-        console.error("Error deleting HTML file:", unlinkError);
-        return res.status(500).json({ error: "Internal Server Error" });
-      }
-
-      // Write the updated JSON data back to the file
-      fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2), "utf-8");
-
-      res.json({ message: `Plan with code ${codeToDelete} deleted successfully` });
-    });
+    res.json({ message: `Plan with code ${codeToDelete} deleted successfully` });
   } catch (error) {
     console.error("Error deleting plan:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 app.get("/displayPlans", isAuthenticated, (req, res) => {
   const jsonFilePath = path.join(
