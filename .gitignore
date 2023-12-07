@@ -23,3 +23,5 @@ typings/
 .DS_Store
 
 .env
+
+backup/
