@@ -17,7 +17,6 @@ app.use(express.static(path.join(__dirname, "public")));
 // Add the following line for parsing urlencoded data
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 // Use express-session middleware for session management
 app.use(
   session({
@@ -38,8 +37,6 @@ const isAuthenticated = (req, res, next) => {
   }
 };
 
-
-
 app.get("/login", (req, res) => {
   res.render("login");
 });
@@ -48,7 +45,6 @@ app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   console.log('Received credentials:', username, password);
-
 
   // Check if the provided username and password match your authentication logic
   if (username === "test" && password === "test") {
@@ -62,7 +58,7 @@ app.post("/login", (req, res) => {
 
 app.get("/loggedin", isAuthenticated, (req, res) => {
   res.render("loggedin");
-})
+});
 
 app.get("/createPlan", isAuthenticated, (req, res) => {
   res.render("createPlan");
@@ -115,7 +111,33 @@ app.post("/createPlan", (req, res) => {
   res.json({ message: "Plan created successfully", newPlan });
 });
 
-app.get("/displayPlans", isAuthenticated,(req, res) => {
+app.post("/deletePlan", isAuthenticated, (req, res) => {
+  const { codeToDelete } = req.body;
+
+  // Update output-format.json to remove the plan with the specified code
+  const jsonFilePath = path.join(
+    __dirname,
+    "public",
+    "html-plans",
+    "output-format.json"
+  );
+
+  try {
+    let jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
+
+    // Filter out the plan to delete
+    jsonData.plans = jsonData.plans.filter((plan) => plan.Code !== codeToDelete);
+
+    fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2), "utf-8");
+
+    res.json({ message: `Plan with code ${codeToDelete} deleted successfully` });
+  } catch (error) {
+    console.error("Error deleting plan:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/displayPlans", isAuthenticated, (req, res) => {
   const jsonFilePath = path.join(
     __dirname,
     "public",
