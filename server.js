@@ -201,6 +201,29 @@ app.get("/displayPlans", isAuthenticated, (req, res) => {
   }
 });
 
+app.get("/checkPlan", (req, res) => {
+  const { code } = req.query;
+
+  const jsonFilePath = path.join(
+    __dirname,
+    "public",
+    "html-plans",
+    "output-format.json"
+  );
+
+  try {
+    const jsonDataString = fs.readFileSync(jsonFilePath, "utf-8");
+    const jsonData = JSON.parse(jsonDataString);
+
+    const exists = jsonData.plans.some((plan) => plan.Code === code);
+
+    res.json({ exists });
+  } catch (error) {
+    console.error("Error checking plan code:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
