@@ -40,12 +40,6 @@
                         <!-- Add a delete button with a unique identifier (e.g., plan.Code) -->
                         <span class="delete-button" data-code="<%= plan.Code %>">X</span>
                     </td>
-                    <td>
-                        <!-- Edit button with a unique identifier (e.g., plan.Code) -->
-                        <a href="/editPlan?code=<%= plan.Code %>">
-                            <span class="editButton" data-code="<%= plan.Code %>">&#9998;</span>
-                        </a>
-                    </td>
                 </tr>
             <% }); %>
         </tbody>

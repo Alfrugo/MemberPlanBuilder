@@ -81,12 +81,32 @@ app.get('/styles.css', (req, res) => {
   });
 });
 
+app.get("/getHtmlContent", (req, res) => {
+  const code = req.query.code;
+
+  const htmlFilePath = path.join(
+    __dirname,
+    "public",
+    "html-plans",
+    `plan-${code}.html`
+  );
+
+  fs.readFile(htmlFilePath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error reading HTML file:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      res.json({ htmlContent: data });
+    }
+  });
+});
+
 app.get("/createPlan", isAuthenticated, (req, res) => {
   res.render("createPlan");
 });
 
 app.post("/createPlan", (req, res) => {
-  const { Code, HTML, Title, Url, ZipCode } = req.body;
+  const { Code, Description, Title, Url, ZipCode } = req.body;  // Update to use Description
 
   // Create HTML file
   const htmlFileName = `plan-${Code}.html`;
@@ -96,7 +116,7 @@ app.post("/createPlan", (req, res) => {
     "html-plans",
     htmlFileName
   );
-  fs.writeFileSync(htmlFilePath, HTML, "utf-8");
+  fs.writeFileSync(htmlFilePath, Description, "utf-8");  // Update to use Description
 
   // Update output-format.json
   const jsonFilePath = path.join(
@@ -119,7 +139,7 @@ app.post("/createPlan", (req, res) => {
 
   const newPlan = {
     Code,
-    HTML: htmlFileName,
+    Description: htmlFileName,  // Update to use Description
     Title,
     Url,
     ZipCode: ZipCode.split(",").map((zip) => zip.trim()),
@@ -223,6 +243,89 @@ app.get("/checkPlan", (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.get("/editPlan", isAuthenticated, (req, res) => {
+  const codeToEdit = req.query.code;
+
+  // Fetch plan data based on the code from output-format.json
+  const jsonFilePath = path.join(__dirname, "public", "html-plans", "output-format.json");
+
+  try {
+      const jsonDataString = fs.readFileSync(jsonFilePath, "utf-8");
+      const jsonData = JSON.parse(jsonDataString);
+
+      const planToEdit = jsonData.plans.find(plan => plan.Code === codeToEdit);
+
+      if (!planToEdit) {
+          return res.status(404).json({ error: "Plan not found" });
+      }
+
+      res.render("editPlan", { plan: planToEdit });
+  } catch (error) {
+      console.error("Error reading output-format.json:", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/updatePlan", isAuthenticated, (req, res) => {
+  const { Code, Description, Title, Url, ZipCode } = req.body;
+
+  // Load existing data
+  const jsonFilePath = path.join(
+    __dirname,
+    "public",
+    "html-plans",
+    "output-format.json"
+  );
+
+  try {
+    let jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
+
+    // Find the plan to update
+    const planToUpdate = jsonData.plans.find((plan) => plan.Code === Code);
+
+    if (!planToUpdate) {
+      res.status(404).json({ error: "Plan not found" });
+      return;
+    }
+
+    // Update plan data
+    planToUpdate.Description = `plan-${Code}.html`; // Include the correct path
+    planToUpdate.Title = Title;
+    planToUpdate.Url = Url;
+    planToUpdate.ZipCode = ZipCode.split(",").map((zip) => zip.trim());
+
+    // Update HTML file
+    const htmlFilePath = path.join(
+      __dirname,
+      "public",
+      "html-plans",
+      `plan-${Code}.html` // Include the correct path
+    );
+
+    fs.writeFileSync(htmlFilePath, Description, "utf-8");
+
+    // Save the updated JSON data
+    fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2), "utf-8");
+
+    res.json({ message: "Plan updated successfully", updatedPlan: planToUpdate });
+  } catch (error) {
+    console.error("Error updating plan:", error);
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
+  }
+});
+
+
+
+
+// Function to generate a unique identifier
+function generateUniqueId() {
+  return Math.random().toString(36).substr(2, 9);
+}
+
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

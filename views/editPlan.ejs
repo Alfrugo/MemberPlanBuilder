@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Head content... -->
+    <title>Edit Plan</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <h1>Edit Plan</h1>
+    <form id="editPlanForm">
+        <!-- Your form fields here, pre-filled with plan data -->
+        <input type="text" id="code" name="code" placeholder="Plan code" value="<%= plan.Code %>" readonly />
+        <textarea id="description" name="description" placeholder="Enter HTML code here" rows="15"><%= plan.HTMLContent %></textarea>
+        <input type="text" id="title" name="title" placeholder="Title" value="<%= plan.Title %>" />
+        <input type="text" id="url" name="url" placeholder="URL" value="<%= plan.Url %>" />
+        <textarea type="text" id="zipCode" name="zipCode" placeholder="Zip Code" rows="5"><%= plan.ZipCode.join(", ") %></textarea>
+        <div class="centerStuff">
+            <button type="submit">Save Changes</button>
+            <button>
+                <a href="/displayPlans">Cancel</a>
+            </button>
+        </div>
+    </form>
+    <div class="result" id="result"></div>
+
+    <!-- Script to handle form submission... -->
+   <!-- Script to handle form submission... -->
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const editPlanForm = document.getElementById("editPlanForm");
+        const resultContainer = document.getElementById("result");
+        const descriptionField = document.getElementById("description");
+        const codeField = document.getElementById("code");
+
+        // Function to fetch HTML content based on plan code
+        const fetchHtmlContent = async (code) => {
+            try {
+                const response = await fetch(`/getHtmlContent?code=${code}`);
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || "Failed to fetch HTML content");
+                }
+
+                return result.htmlContent;
+            } catch (error) {
+                console.error("Error fetching HTML content:", error);
+                throw error;
+            }
+        };
+
+        // Function to update description field based on plan code
+        const updateDescriptionField = async () => {
+            const code = codeField.value;
+
+            try {
+                const htmlContent = await fetchHtmlContent(code);
+                descriptionField.value = htmlContent;
+            } catch (error) {
+                descriptionField.value = "";
+            }
+        };
+
+        // Initial population of description field
+        await updateDescriptionField();
+
+        // Event listener for form submission
+        editPlanForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const code = codeField.value;
+            const description = descriptionField.value;
+            const title = document.getElementById("title").value;
+            const url = document.getElementById("url").value;
+            const zipCode = document.getElementById("zipCode").value;
+
+            try {
+                const response = await fetch("/updatePlan", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        Code: code,
+                        Description: description,
+                        Title: title,
+                        Url: url,
+                        ZipCode: zipCode,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(
+                        `Failed to update plan: ${response.status} ${response.statusText}`
+                    );
+                }
+
+                const result = await response.json();
+                resultContainer.textContent = result.message;
+            } catch (error) {
+                console.error("Error updating plan:", error);
+                resultContainer.textContent = "Error updating plan. Please try again.";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

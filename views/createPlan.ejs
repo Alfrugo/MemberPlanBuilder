@@ -1,88 +1,87 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Plan</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
-  </head>
-  <body>
+</head>
+<body>
     <div class="centerBox">
-    <h1>Create Plan</h1>
-    <form id="createPlanForm">
-      <!-- Your form fields here -->
-<!-- Your form fields here -->
-<input type="text" id="code" name="code" placeholder="Plan code" required />
-<textarea id="html" name="html" placeholder="Enter HTML code here" rows="15" required></textarea>
-<input type="text" id="title" name="title" placeholder="Title" required />
-<input type="text" id="url" name="url" placeholder="URL" />
-<textarea type="text" id="zipCode" name="zipCode" placeholder="Zip Code" rows="5" required></textarea>
+        <h1>Create Plan</h1>
+        <form id="createPlanForm">
+            <!-- Your form fields here -->
+            <input type="text" id="code" name="code" placeholder="Plan code" required />
+            <textarea id="description" name="description" placeholder="Enter HTML code here" rows="15" required></textarea>
+            <input type="text" id="title" name="title" placeholder="Title" required />
+            <input type="text" id="url" name="url" placeholder="URL" />
+            <textarea type="text" id="zipCode" name="zipCode" placeholder="Zip Code" rows="5" required></textarea>
 
-      <div class="centerStuff">
-      <button type="submit">Create Plan</button>
-      <button>
-        <a href="/displayPlans">Display Plans</a>
-</button>
-</div>
-    </form>
-    <div class="result" id="result"></div>
-  </div>
+            <div class="centerStuff">
+                <button type="submit">Create Plan</button>
+                <button>
+                    <a href="/displayPlans">Display Plans</a>
+                </button>
+            </div>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
 
-  <script>
-    console.log("createPlan.js loaded");
-    document.addEventListener("DOMContentLoaded", async () => {
-      const createPlanForm = document.getElementById("createPlanForm");
-      const resultContainer = document.getElementById("result");
-  
-      createPlanForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-  
-        const code = document.getElementById("code").value;
-        const html = document.getElementById("html").value;
-        const title = document.getElementById("title").value;
-        const url = document.getElementById("url").value;
-        const zipCode = document.getElementById("zipCode").value;
-  
-        try {
-          // Check if the plan code already exists
-          const checkResponse = await fetch(`/checkPlan?code=${code}`);
-          const checkResult = await checkResponse.json();
-  
-          if (!checkResult.exists) {
-            // Plan code does not exist, proceed with creating the plan
-            const response = await fetch("/createPlan", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                Code: code,
-                HTML: html,
-                Title: title,
-                Url: url,
-                ZipCode: zipCode,
-              }),
+    <script>
+        console.log("createPlan.js loaded");
+        document.addEventListener("DOMContentLoaded", async () => {
+            const createPlanForm = document.getElementById("createPlanForm");
+            const resultContainer = document.getElementById("result");
+
+            createPlanForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                const code = document.getElementById("code").value;
+                const description = document.getElementById("description").value;
+                const title = document.getElementById("title").value;
+                const url = document.getElementById("url").value;
+                const zipCode = document.getElementById("zipCode").value;
+
+                try {
+                    // Check if the plan code already exists
+                    const checkResponse = await fetch(`/checkPlan?code=${code}`);
+                    const checkResult = await checkResponse.json();
+
+                    if (!checkResult.exists) {
+                        // Plan code does not exist, proceed with creating the plan
+                        const response = await fetch("/createPlan", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                Code: code,
+                                Description: description, // Update to use Description
+                                Title: title,
+                                Url: url,
+                                ZipCode: zipCode,
+                            }),
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(
+                                `Failed to create plan: ${response.status} ${response.statusText}`
+                            );
+                        }
+
+                        const result = await response.json();
+                        resultContainer.textContent = result.message;
+                    } else {
+                        // Plan code already exists, show an error message
+                        resultContainer.textContent = "Error: Plan code already exists.";
+                    }
+                } catch (error) {
+                    console.error("Error creating plan:", error);
+                    resultContainer.textContent = "Error creating plan. Please try again.";
+                }
             });
-  
-            if (!response.ok) {
-              throw new Error(
-                `Failed to create plan: ${response.status} ${response.statusText}`
-              );
-            }
-  
-            const result = await response.json();
-            resultContainer.textContent = result.message;
-          } else {
-            // Plan code already exists, show an error message
-            resultContainer.textContent = "Error: Plan code already exists.";
-          }
-        } catch (error) {
-          console.error("Error creating plan:", error);
-          resultContainer.textContent = "Error creating plan. Please try again.";
-        }
-      });
-    });
-  </script>
-    
-  </body>
+        });
+    </script>
+
+</body>
 </html>

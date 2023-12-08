@@ -109,4 +109,14 @@ body {
   .delete-button:hover {
     background-color: #cc4b3d;
   }
+
+  .editButton {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #4772ff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
   
