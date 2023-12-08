@@ -4,19 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Plan</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
   </head>
   <body>
+    <div class="centerBox">
     <h1>Create Plan</h1>
     <form id="createPlanForm">
       <!-- Your form fields here -->
-      <input type="text" id="code" name="code" placeholder="Code" />
-      <input type="text" id="html" name="html" placeholder="HTML" />
-      <input type="text" id="title" name="title" placeholder="Title" />
-      <input type="text" id="url" name="url" placeholder="URL" />
-      <input type="text" id="zipCode" name="zipCode" placeholder="Zip Code" />
+<!-- Your form fields here -->
+<input type="text" id="code" name="code" placeholder="Plan code" required />
+<textarea id="html" name="html" placeholder="Enter HTML code here" rows="15" required></textarea>
+<input type="text" id="title" name="title" placeholder="Title" required />
+<input type="text" id="url" name="url" placeholder="URL" />
+<textarea type="text" id="zipCode" name="zipCode" placeholder="Zip Code" rows="5" required></textarea>
+
+      <div class="centerStuff">
       <button type="submit">Create Plan</button>
+      <button>
+        <a href="/displayPlans">Display Plans</a>
+</button>
+</div>
     </form>
-    <div id="result"></div>
+    <div class="result" id="result"></div>
+  </div>
 
     <script>
       console.log("createPlan.js loaded");

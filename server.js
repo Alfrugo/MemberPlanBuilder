@@ -67,6 +67,20 @@ app.get("/loggedin", isAuthenticated, (req, res) => {
   res.render("loggedin");
 });
 
+// Route to serve the styles.css dynamically
+app.get('/styles.css', (req, res) => {
+  const cssFilePath = path.join(__dirname, 'styles.css');
+
+  fs.readFile(cssFilePath, 'utf8', (err, data) => {
+    if (err) {
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.header('Content-Type', 'text/css');
+      res.send(data);
+    }
+  });
+});
+
 app.get("/createPlan", isAuthenticated, (req, res) => {
   res.render("createPlan");
 });
