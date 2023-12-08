@@ -45,10 +45,18 @@
                           "<strong>Description:</strong> Unable to load content.");
                     }
                   else {
-                    if ("" === t.Url)
+                    if ("" !== t.Url)
                       return void (o.innerHTML = `<strong>Description:</strong> ${t.Description}`);
-                    window.open(t.Url, "_blank");
+                      try {
+                        window.open(t.Url, "_blank");
+                        console.log("open url");
+                    } catch (error) {
+                        console.error("Error opening URL:", error);
+                    }
                   }
+                  if ("" !== t.Url) {
+                    window.open(t.Url, "_blank");
+                }
                 }),
                 e.appendChild(n);
             });
