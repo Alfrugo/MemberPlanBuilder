@@ -44,6 +44,39 @@ const isAuthenticated = (req, res, next) => {
   }
 };
 
+// Add this near the top of your server.js file
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
+// Add this after the "/checkPlan" route
+app.get("/searchByZipCode", (req, res) => {
+  const { zipCode } = req.query;
+
+  const jsonFilePath = path.join(
+    __dirname,
+    "public",
+    "html-plans",
+    "output-format.json"
+  );
+
+  try {
+    const jsonDataString = fs.readFileSync(jsonFilePath, "utf-8");
+    const jsonData = JSON.parse(jsonDataString);
+
+    // Filter plans based on Zip Code
+    const matchingPlans = jsonData.plans.filter((plan) =>
+      plan.ZipCode.includes(zipCode)
+    );
+
+    res.render("searchResults", { zipCode, matchingPlans });
+  } catch (error) {
+    console.error("Error searching by Zip Code:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 app.get("/login", (req, res) => {
   res.render("login");
 });

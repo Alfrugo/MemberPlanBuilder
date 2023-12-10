@@ -1,0 +1,29 @@
+<!-- views/searchResults.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+</head>
+
+<body>
+  <h1>Search Results for Zip Code <%= zipCode %></h1>
+
+  <% if (matchingPlans.length > 0) { %>
+    <ul>
+      <% matchingPlans.forEach((plan) => { %>
+        <li>
+          <a href="/editPlan?code=<%= plan.Code %>"><%= plan.Title %></a>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No plans found for the entered Zip Code.</p>
+  <% } %>
+
+</body>
+
+</html>

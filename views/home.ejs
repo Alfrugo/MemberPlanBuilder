@@ -1,0 +1,21 @@
+<!-- views/home.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+</head>
+
+<body>
+  <h1>Zip Code Search</h1>
+  <form action="/searchByZipCode" method="GET">
+    <label for="zipCode">Enter Zip Code:</label>
+    <input type="text" id="zipCode" name="zipCode" required>
+    <button type="submit">Search</button>
+  </form>
+</body>
+
+</html>
