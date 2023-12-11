@@ -52,28 +52,109 @@ app.get("/", (req, res) => {
 app.get("/searchByZipCode", (req, res) => {
   const { zipCode } = req.query;
 
-  const jsonFilePath = path.join(
-    __dirname,
-    "public",
-    "html-plans",
-    "output-format.json"
-  );
+  // Load existing data
+  const jsonFilePath = path.join(__dirname, "public", "html-plans", "output-format.json");
 
   try {
-    const jsonDataString = fs.readFileSync(jsonFilePath, "utf-8");
-    const jsonData = JSON.parse(jsonDataString);
+    const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
 
-    // Filter plans based on Zip Code
+    // Find plans with the matching zip code
     const matchingPlans = jsonData.plans.filter((plan) =>
       plan.ZipCode.includes(zipCode)
     );
 
-    res.render("searchResults", { zipCode, matchingPlans });
+    // Define notFoundContent
+    const notFoundFilePath = path.join(
+      __dirname,
+      "public",
+      "html-plans",
+      "notfound.html"
+    );
+    const notFoundContent = fs.readFileSync(notFoundFilePath, "utf-8");
+
+    if (matchingPlans.length === 0) {
+      // No matching plans found, render notfound.html
+      res.render("searchResults", { zipCode, matchingPlans: [], notFoundContent });
+    } else {
+      // Render the searchResults page with matching plans
+      res.render("searchResults", { zipCode, matchingPlans });
+    }
   } catch (error) {
-    console.error("Error searching by Zip Code:", error);
+    console.error("Error searching plans by zip code:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+app.get("/displayPlan/:code", (req, res) => {
+  const codeToDisplay = req.params.code;
+
+  // Fetch plan data based on the code from output-format.json
+  const jsonFilePath = path.join(__dirname, "public", "html-plans", "output-format.json");
+
+  try {
+      const jsonDataString = fs.readFileSync(jsonFilePath, "utf-8");
+      const jsonData = JSON.parse(jsonDataString);
+
+      const planToDisplay = jsonData.plans.find(plan => plan.Code === codeToDisplay);
+
+      if (!planToDisplay) {
+          return res.status(404).json({ error: "Plan not found" });
+      }
+
+      // Read HTML content from the corresponding file
+      const htmlFilePath = path.join(
+          __dirname,
+          "public",
+          "html-plans",
+          `plan-${codeToDisplay}.html`
+      );
+
+      const htmlContent = fs.readFileSync(htmlFilePath, "utf-8");
+
+      // Render the displayPlan template with HTML content
+      res.render("displayPlan", { plan: planToDisplay, htmlContent });
+  } catch (error) {
+      console.error("Error reading data:", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/searchByZipCode", (req, res) => {
+  const { zipCode } = req.query;
+
+  // Load existing data
+  const jsonFilePath = path.join(__dirname, "public", "html-plans", "output-format.json");
+
+  try {
+    const jsonData = JSON.parse(fs.readFileSync(jsonFilePath, "utf-8"));
+
+    // Find plans with the matching zip code
+    const matchingPlans = jsonData.plans.filter((plan) =>
+      plan.ZipCode.includes(zipCode)
+    );
+
+    if (matchingPlans.length === 0) {
+      // No matching plans found, render notfound.html
+      const notFoundFilePath = path.join(
+        __dirname,
+        "public",
+        "html-plans",
+        "notfound.html"
+      );
+      const notFoundContent = fs.readFileSync(notFoundFilePath, "utf-8");
+
+      res.render("searchResults", { matchingPlans: [], notFoundContent });
+    } else {
+      // Render the searchResults page with matching plans
+      res.render("searchResults", { matchingPlans });
+    }
+  } catch (error) {
+    console.error("Error searching plans by zip code:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 
 app.get("/login", (req, res) => {
@@ -348,40 +429,37 @@ app.post("/updatePlan", isAuthenticated, (req, res) => {
 });
 
 // Add this route definition before the app.listen()
-
-app.get("/displayPlan/:code", (req, res) => {
-  const codeToDisplay = req.params.code;
-
-  // Fetch plan data based on the code from output-format.json
-  const jsonFilePath = path.join(__dirname, "public", "html-plans", "output-format.json");
-
-  try {
-      const jsonDataString = fs.readFileSync(jsonFilePath, "utf-8");
-      const jsonData = JSON.parse(jsonDataString);
-
-      const planToDisplay = jsonData.plans.find(plan => plan.Code === codeToDisplay);
-
-      if (!planToDisplay) {
-          return res.status(404).json({ error: "Plan not found" });
-      }
-
-      // Read HTML content from the corresponding file
-      const htmlFilePath = path.join(
-          __dirname,
-          "public",
-          "html-plans",
-          `plan-${codeToDisplay}.html`
-      );
-
-      const htmlContent = fs.readFileSync(htmlFilePath, "utf-8");
-
-      // Render the displayPlan template with HTML content
-      res.render("displayPlan", { plan: planToDisplay, htmlContent });
-  } catch (error) {
-      console.error("Error reading data:", error.message);
-      res.status(500).json({ error: "Internal Server Error" });
-  }
+app.get("/editNotFound", isAuthenticated, (req, res) => {
+  const notFoundFilePath = path.join(
+    __dirname,
+    "public",
+    "html-plans",
+    "notfound.html"
+  );
+  const notFoundContent = fs.readFileSync(notFoundFilePath, "utf-8");
+  res.render("editNotFound", { notFoundContent });
 });
+
+app.post("/updateNotFound", isAuthenticated, (req, res) => {
+  const { notFoundContent } = req.body;
+
+  const notFoundFilePath = path.join(
+    __dirname,
+    "public",
+    "html-plans",
+    "notfound.html"
+  );
+
+  fs.writeFileSync(notFoundFilePath, notFoundContent, "utf-8");
+
+  res.redirect("/editNotFound"); // Redirect back to the editing page
+});
+
+
+
+// Add this route definition before the app.listen()
+
+
 
 
 

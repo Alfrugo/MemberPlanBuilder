@@ -13,27 +13,24 @@
 
 <body>
   <div class="centerBox">
-    <img class="logo" src="https://www.mtm-inc.net/wp-content/uploads/2020/09/mtm-logo-100-x-41.png" alt="MTM, Inc.">
-
-
-  <h1>Plans in <%= zipCode %></h1>
 
   <% if (matchingPlans.length > 0) { %>
+    <h1>Plans in <%= zipCode %></h1>
     <ul>
       <% matchingPlans.forEach((plan) => { %>
         <div class="planList">
-        <li>
-          <a href="/displayPlan/<%= plan.Code %>"><%= plan.Title %></a>
-        </li>
-      </div>
+          <li>
+            <a href="/displayPlan/<%= plan.Code %>"><%= plan.Title %></a>
+          </li>
+        </div>
       <% }); %>
     </ul>
   <% } else { %>
-    <p>No plans found.</p>
-    <a href="/"><button>Back to Search</button></a>
+    <!-- Display the content of notfound.html -->
+    <%- notFoundContent %>
   <% } %>
-  </div>
 
+  </div>
 </body>
 
 </html>
