@@ -31,7 +31,6 @@ app.use(
   })
 );
 
-console.log('updated server.js');
 
 // Middleware to check if the user is authenticated
 const isAuthenticated = (req, res, next) => {
@@ -348,13 +347,48 @@ app.post("/updatePlan", isAuthenticated, (req, res) => {
   }
 });
 
+// Add this route definition before the app.listen()
+
+app.get("/displayPlan/:code", (req, res) => {
+  const codeToDisplay = req.params.code;
+
+  // Fetch plan data based on the code from output-format.json
+  const jsonFilePath = path.join(__dirname, "public", "html-plans", "output-format.json");
+
+  try {
+      const jsonDataString = fs.readFileSync(jsonFilePath, "utf-8");
+      const jsonData = JSON.parse(jsonDataString);
+
+      const planToDisplay = jsonData.plans.find(plan => plan.Code === codeToDisplay);
+
+      if (!planToDisplay) {
+          return res.status(404).json({ error: "Plan not found" });
+      }
+
+      // Read HTML content from the corresponding file
+      const htmlFilePath = path.join(
+          __dirname,
+          "public",
+          "html-plans",
+          `plan-${codeToDisplay}.html`
+      );
+
+      const htmlContent = fs.readFileSync(htmlFilePath, "utf-8");
+
+      // Render the displayPlan template with HTML content
+      res.render("displayPlan", { plan: planToDisplay, htmlContent });
+  } catch (error) {
+      console.error("Error reading data:", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 
-// Function to generate a unique identifier
-function generateUniqueId() {
-  return Math.random().toString(36).substr(2, 9);
-}
+
+
+
+
 
 
 

@@ -7,22 +7,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Results</title>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+
 </head>
 
 <body>
-  <h1>Search Results for Zip Code <%= zipCode %></h1>
+  <div class="centerBox">
+    <img class="logo" src="https://www.mtm-inc.net/wp-content/uploads/2020/09/mtm-logo-100-x-41.png" alt="MTM, Inc.">
+
+
+  <h1>Plans in <%= zipCode %></h1>
 
   <% if (matchingPlans.length > 0) { %>
     <ul>
       <% matchingPlans.forEach((plan) => { %>
+        <div class="planList">
         <li>
-          <a href="/editPlan?code=<%= plan.Code %>"><%= plan.Title %></a>
+          <a href="/displayPlan/<%= plan.Code %>"><%= plan.Title %></a>
         </li>
+      </div>
       <% }); %>
     </ul>
   <% } else { %>
-    <p>No plans found for the entered Zip Code.</p>
+    <p>No plans found.</p>
+    <a href="/"><button>Back to Search</button></a>
   <% } %>
+  </div>
 
 </body>
 

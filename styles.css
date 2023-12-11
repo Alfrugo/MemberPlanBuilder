@@ -1,122 +1,203 @@
 /* styles.css */
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-    padding: 30px;
-  }
-  
-  h1 {
-    color: #4b0082; /* Dark purple */
-    text-align: center;
-  }
-  
-  #createPlanForm {
- 
-  }
+  font-family: "Arial", sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  padding: 30px;
+}
 
-  .centerBox {
+h1 {
+  color: #4b0082; /* Dark purple */
+  text-align: center;
+}
+
+/* .centerBox {
     max-width: 400px;
     margin: 20px auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  .result {
-    background-color: blueviolet;
-    color: white;
-    border-radius: 15px;
+  } */
+
+.result {
+  background-color: blueviolet;
+  color: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin: auto;
+  text-align: center;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  border: 1px solid #4b0082; /* Dark purple */
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #4b0082; /* Dark purple */
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: auto;
+  text-align: center;
+}
+.centerStuff {
+  text-align: center;
+  align-items: center;
+  margin: auto;
+  padding: 10px;
+}
+
+button:hover {
+  background-color: #9d0453; /* Darker purple */
+}
+
+a {
+  text-decoration: none;
+}
+#result {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: rgb(72, 0, 108);
+  color: white;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+.delete-button {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #940213;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.delete-button:hover {
+  background-color: #6d06a1;
+}
+
+.editButton {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #2d014e;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+/* .planList {
     padding: 20px;
-    margin: auto;
-    text-align: center;
-    
-  }
-  
-  input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    box-sizing: border-box;
-    border: 1px solid #4b0082; /* Dark purple */
+    color: rgb(56, 55, 55);
+    background-color: #26065e;
+    border: #4b0082;
+    border-style: solid;
     border-radius: 10px;
-    font-size: 16px;
-  }
-  
-  button {
-    background-color: #4b0082; /* Dark purple */
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin: auto;
-    text-align: center;
-  }
-  .centerStuff {
-    text-align: center;
-    align-items: center;
-    margin: auto;
-    padding: 10px;
-  }
-  
-  button:hover {
-    background-color: #9d0453; /* Darker purple */
-  }
-  
-  a {
-    color: #ffffff; /* Dark purple */
-    text-decoration: none;
-  }
-  #result {
-    margin-top: 20px;
-  }
+    margin: 10px;
+  } */
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: rgb(102, 74, 226);
-    color: white;
-  }
-  
-  tr:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .delete-button {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #8d47ff;
-    color: white;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  .delete-button:hover {
-    background-color: #cc4b3d;
-  }
+/* Remove bullets and style list items */
 
-  .editButton {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #4772ff;
-    color: white;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-  }
-  
+.logo {
+  padding-bottom: 15px;
+}
+.centerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  min-width: 300px;
+  max-width: 500px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  /* Centering adjustments */
+}
+
+.centerBox img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  margin-top: 10px;
+  display: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 100%; /* Make the input full width */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+#createPlanForm,
+#editPlanForm {
+  width: 90%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+body ul li {
+  background-color: #f0f0f0; /* Light grey background */
+  color: #000 !important; /* Black text color with !important */
+  border-radius: 3px; /* Rounded corners */
+  margin: 5px 0; /* Adjust as needed */
+  padding: 10px; /* Adjust as needed */
+}
+
+a {
+  text-decoration: none; /* Remove underlining */
+}
+.link {
+  color: #ffffff !important; /* Black text color with !important */
+}

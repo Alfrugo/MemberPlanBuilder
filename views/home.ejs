@@ -7,15 +7,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
+  <link rel="stylesheet" href="../styles.css">
+
 </head>
 
 <body>
+
+  <div class="centerBox">
+  <img class="logo" src="https://www.mtm-inc.net/wp-content/uploads/2020/09/mtm-logo-100-x-41.png" alt="MTM, Inc.">
+
   <h1>Zip Code Search</h1>
-  <form action="/searchByZipCode" method="GET">
+  <form action="../searchByZipCode" method="GET">
     <label for="zipCode">Enter Zip Code:</label>
     <input type="text" id="zipCode" name="zipCode" required>
     <button type="submit">Search</button>
   </form>
+  </div>
 </body>
 
 </html>

@@ -1,0 +1,22 @@
+<!-- views/displayPlan.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= plan.Title +" - "+ plan.Code %></title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="centerBox">
+        <img class="logo" src="https://www.mtm-inc.net/wp-content/uploads/2020/09/mtm-logo-100-x-41.png" alt="MTM, Inc.">
+
+
+    <h1><%= plan.Title %></h1>
+    <!-- <p><strong>Code:</strong> <%= plan.Code %></p> -->
+    <!-- Display the HTML content from the file -->
+    <div><%- htmlContent %></div>
+    </div>
+</body>
+</html>
