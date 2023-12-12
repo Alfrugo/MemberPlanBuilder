@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= plan.Title +" - "+ plan.Code %></title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="https://memberportal.net/wp-content/uploads/2019/01/favicon.png" type="image/png"/>
 </head>
 <body>
     <div class="centerBox">
         <img class="logo" src="https://www.mtm-inc.net/wp-content/uploads/2020/09/mtm-logo-100-x-41.png" alt="MTM, Inc.">
 
 
-    <h1><%= plan.Title %></h1>
+    <h2><%= plan.Title %></h2>
     <!-- <p><strong>Code:</strong> <%= plan.Code %></p> -->
     <!-- Display the HTML content from the file -->
     <div><%- htmlContent %></div>

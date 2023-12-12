@@ -1,5 +1,4 @@
-<!-- views/searchResults.ejs -->
-
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +25,49 @@
       <% }); %>
     </ul>
   <% } else { %>
-    <!-- Display the content of notfound.html -->
+    <%- notFoundContent %>
+  <% } %>
+
+  </div>
+</body>
+
+</html> -->
+
+
+<!-- views/searchResults.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+  <link rel="icon" href="https://memberportal.net/wp-content/uploads/2019/01/favicon.png" type="image/png"/>
+</head>
+
+<body>
+  <div class="centerBox">
+
+  <% if (matchingPlans.length > 0) { %>
+    <h1>Plans in <%= zipCode %></h1>
+    <ul>
+      <% matchingPlans.forEach((plan) => { %>
+        <div class="planList">
+          <li>
+            <% if (plan.Url) { %>
+              <!-- If Url is present, redirect to the specified URL -->
+              <a href="<%= plan.Url %>" target="_blank"><%= plan.Title %></a>
+            <% } else { %>
+              <!-- If Url is not present, display plan info -->
+              <a href="/displayPlan/<%= plan.Code %>"><%= plan.Title %></a>
+            <% } %>
+          </li>
+        </div>
+      <% }); %>
+    </ul>
+  <% } else { %>
     <%- notFoundContent %>
   <% } %>
 

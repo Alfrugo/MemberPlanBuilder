@@ -13,15 +13,6 @@ h1 {
   text-align: center;
 }
 
-/* .centerBox {
-    max-width: 400px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  } */
-
 .result {
   background-color: blueviolet;
   color: white;
@@ -57,7 +48,8 @@ button {
   text-align: center;
   align-items: center;
   margin: auto;
-  padding: 10px;
+  padding: 20px;
+
 }
 
 button:hover {
@@ -142,9 +134,12 @@ tr:hover {
   max-width: 600px;
   margin: 20px auto;
   background-color: #fff;
-  padding: 10px;
+  padding: 20px;
+  padding-bottom: 40px;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  line-height: 2; /* You can adjust this value based on your preference */
+
 
   /* Centering adjustments */
 }
