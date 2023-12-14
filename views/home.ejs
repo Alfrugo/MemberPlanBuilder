@@ -1,29 +1,77 @@
 <!-- views/home.ejs -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      rel="icon"
+      href="https://memberportal.net/wp-content/uploads/2019/01/favicon.png"
+      type="image/png"
+    />
+  
+    <link
+      href="https://fonts.googleapis.com/css?family=PT+Sans"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="icon" href="https://memberportal.net/wp-content/uploads/2019/01/favicon.png" type="image/png"/>
+  <body>
+    <div class="centerBox">
+      <img
+        class="logo"
+        src="https://memberportal.net/wp-content/uploads/2018/12/mp-header.png"
+        alt="MTM, Inc."
+      />
 
-</head>
+      <h3>Enter Your Zip Code</h3>
+      <h4>so we can help you quicker.</h4>
+      <p class="bodyText">
+        We’ll pull up the health care plans available in your area. Simply
+        choose yours and get the information you’ll need to reserve your trip
+        with us.
+      </p>
 
-<body>
+      <form action="../searchByZipCode" method="GET">
+        <!-- <label for="zipCode">Enter Zip Code:</label> -->
+        <input type="text" id="zipCode" name="zipCode" required />
+        <button type="submit">Fetch!</button>
+      </form>
+      <br>
+      <a href="https://mtm.mtmlink.net/" target="blank"
+        ><img
+          width="339"
+          src="https://memberportal.net/wp-content/uploads/2022/11/mtm-link-intro-banner-animated-mp-1.gif"
+          alt="Book Your Next Ride Online!"
+      /></a>
+      <br>
+      <h5>Download the MTM Link member app today!</h5>
 
-  <div class="centerBox">
-  <img class="logo" src="https://www.mtm-inc.net/wp-content/uploads/2020/09/mtm-logo-100-x-41.png" alt="MTM, Inc.">
+      <a
+        href="https://apps.apple.com/us/app/mtm-link-member/id1534737345"
+        target="blank"
+        ><img
+          src="https://memberportal.net/wp-content/uploads/2021/04/apple-app-store.png"
+          width="150"
+          height="46"
+          alt="Available on the Apple app store"
+          style="padding-top: 5px"
+      /></a>
 
-  <h1>Zip Code Search</h1>
-  <form action="../searchByZipCode" method="GET">
-    <label for="zipCode">Enter Zip Code:</label>
-    <input type="text" id="zipCode" name="zipCode" required>
-    <button type="submit">Search</button>
-  </form>
-  </div>
-</body>
-
+      <a
+        href="https://play.google.com/store/apps/details?id=net.mtmlink.member&amp;hl=en_US&amp;gl=US"
+        target="blank"
+        ><img
+          src="https://memberportal.net/wp-content/uploads/2021/04/google-play-store.png"
+          width="150"
+          height="46"
+          alt="Get it on Google Play"
+          style="padding-top: 5px"
+      /></a>
+    </div>
+  </body>
 </html>
