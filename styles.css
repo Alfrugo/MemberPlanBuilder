@@ -3541,7 +3541,7 @@ margin-top: -12px;
 /* Mobile responsiveness */
 @media (max-width: 600px) {
   .logo {
-    max-width: 450px;
+    max-width: 400px;
   }
   .centerBox {
     max-width: 500px;
