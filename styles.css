@@ -623,9 +623,7 @@ margin: 0px;
 	width: 100%;
 }
 
-.transportationManagementMenu {
-background-image: url(/assets/logo.png) !important;
-}
+
 
 #accessheadernav {
 	clear: both;
@@ -3540,6 +3538,20 @@ margin-top: -12px;
 
   /* Centering adjustments */
 }
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .logo {
+    max-width: 450px;
+  }
+  .centerBox {
+    max-width: 500px;
+    margin-left: 10px; /* Resetting the margin for smaller screens */
+    padding: 20px; /* Adjusting padding for smaller screens */
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+
+    
+  }
+}
 
 .centerBox-Admin {
   
@@ -3699,3 +3711,4 @@ tr:hover {
   width: 80%;
   margin: auto;
 }
+
