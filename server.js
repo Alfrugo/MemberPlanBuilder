@@ -164,7 +164,7 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
-  console.log('Received credentials:', username, password);
+  // console.log('Received credentials:', username, password);
 
   // Check if the provided username and password match your authentication logic
   if (username === USERNAME && password === PASSWORD) {
@@ -473,5 +473,5 @@ app.post("/updateNotFound", isAuthenticated, (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  // console.log(`Server is running on http://localhost:${PORT}`);
 });
