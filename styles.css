@@ -1,13 +1,4 @@
-/*
-Theme Name: MemberPortal.net
-Theme URI: http://MemberPortal.net/
-Author URI: http://washmomedia.com/
-Description: MemberPortal.net
-Version: 1.0
-*/
 
-/* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
--------------------------------------------------------------- */
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -569,7 +560,6 @@ a:hover {
 	top: 0;
 	left: 7.6%;
 }
-
 
 /* =Header
 ----------------------------------------------- */
