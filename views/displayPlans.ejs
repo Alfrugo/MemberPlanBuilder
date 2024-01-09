@@ -42,17 +42,17 @@
                 <tr>
                     <td><%= plan.Code %></td>
                     <td>
-                        <!-- Hyperlink added on the plan's title -->
                         <a href="displayPlan/<%= plan.Code %>"><%= plan.Title %></a>
                     </td>
                     <td><%= plan.Url %></td>
-                    <td><%= plan.ZipCode.length %></td>
                     <td>
-                        <!-- Delete button with a unique identifier (e.g., plan.Code) -->
+                        <!-- Hyperlink added around zip code count -->
+                        <a href="/showZipCodes?code=<%= plan.Code %>"><%= plan.ZipCode.length %></a>
+                    </td>
+                    <td>
                         <span class="delete-button" data-code="<%= plan.Code %>">X</span>
                     </td>
                     <td>
-                        <!-- Edit button with a unique identifier (e.g., plan.Code) -->
                         <a href="/editPlan?code=<%= plan.Code %>">
                             <span class="editButton" data-code="<%= plan.Code %>">&#9998;</span>
                         </a>
@@ -60,6 +60,7 @@
                 </tr>
             <% }); %>
         </tbody>
+        
         
     </table>
 </div>

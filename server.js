@@ -455,6 +455,30 @@ app.post("/updateNotFound", isAuthenticated, (req, res) => {
   res.redirect("/editNotFound"); // Redirect back to the editing page
 });
 
+app.get('/showZipCodes', (req, res) => {
+  const planCode = req.query.code;
+
+  // Read the JSON file
+  fs.readFile(path.join(__dirname, 'public', 'html-plans', 'output-format.json'), 'utf8', (err, data) => {
+      if (err) {
+          console.error(err);
+          return res.status(500).send("Server Error");
+      }
+
+      // Parse JSON data
+      const plans = JSON.parse(data).plans;
+      // Find the plan with the given code
+      const plan = plans.find(p => p.Code === planCode);
+
+      if (plan) {
+          // Join the zip codes with commas and send as response
+          res.send(plan.ZipCode.join(', '));
+      } else {
+          res.status(404).send("Plan not found");
+      }
+  });
+});
+
 
 
 // Add this route definition before the app.listen()
