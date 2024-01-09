@@ -41,11 +41,14 @@
             <% plans.forEach(plan => { %>
                 <tr>
                     <td><%= plan.Code %></td>
-                    <td><%= plan.Title %></td>
+                    <td>
+                        <!-- Hyperlink added on the plan's title -->
+                        <a href="displayPlan/<%= plan.Code %>"><%= plan.Title %></a>
+                    </td>
                     <td><%= plan.Url %></td>
                     <td><%= plan.ZipCode.length %></td>
                     <td>
-                        <!-- Add a delete button with a unique identifier (e.g., plan.Code) -->
+                        <!-- Delete button with a unique identifier (e.g., plan.Code) -->
                         <span class="delete-button" data-code="<%= plan.Code %>">X</span>
                     </td>
                     <td>
@@ -57,12 +60,11 @@
                 </tr>
             <% }); %>
         </tbody>
+        
     </table>
 </div>
 
-   <!-- ... Your existing HTML code ... -->
 
-<!-- ... Your existing HTML code ... -->
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
