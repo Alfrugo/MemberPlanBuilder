@@ -479,16 +479,20 @@ app.get('/showZipCodes', (req, res) => {
   });
 });
 
+app.get("/plans", (req, res) => {
+  const jsonFilePath = path.join(__dirname, "public", "html-plans", "output-format.json");
 
+  try {
+      const jsonDataString = fs.readFileSync(jsonFilePath, "utf-8");
+      const jsonData = JSON.parse(jsonDataString);
 
-// Add this route definition before the app.listen()
-
-
-
-
-
-
-
+      // Render a simplified version of the plans page
+      res.render("plans", { plans: jsonData.plans });
+  } catch (error) {
+      console.error("Error reading output-format.json:", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 
