@@ -46,6 +46,10 @@ table {
 ol, ul {
 	list-style: none;
 }
+
+ul {
+	list-style-type: none;
+  }
 table {/* tables still need 'cellspacing="0"' in the markup */
 	border-collapse: separate;
 	border-spacing: 0;
@@ -3703,3 +3707,6 @@ tr:hover {
   margin: auto;
 }
 
+ul {
+	list-style-type: none;
+  }
