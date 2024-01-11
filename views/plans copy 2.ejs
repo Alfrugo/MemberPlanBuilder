@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Plans</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="https://memberportal.net/wp-content/uploads/2019/01/favicon.png" type="image/png"/>
+    <script>
+        function sortTable() {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementsByTagName("table")[0];
+            switching = true;
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("td")[1]; // Get the Title column
+                    y = rows[i + 1].getElementsByTagName("td")[1]; // Get the next row's Title column
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="table-container">
+        <img class="logo" src="https://memberportal.net/wp-content/uploads/2018/12/mp-header.png" alt="MTM, Inc."/>
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th onclick="sortTable()" style="cursor:pointer;">Title</th>
+                    <th>Url</th>
+                    <th>Zip Code Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% plans.forEach(plan => { %>
+                    <tr>
+                        <td><%= plan.Code %></td>
+                        <td>
+                            <a href="displayPlan/<%= plan.Code %>"><%= plan.Title %></a>
+                        </td>
+                        <td>
+                            <% if(plan.Url) { %>
+                                <a href="<%= plan.Url %>" target="_blank"><%= plan.Url %></a>
+                            <% } else { %>
+                                N/A
+                            <% } %>
+                        </td>
+                        <td>
+                            <a href="/showZipCodes?code=<%= plan.Code %>"><%= plan.ZipCode.length %></a>
+                        </td>
+                    </tr>                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

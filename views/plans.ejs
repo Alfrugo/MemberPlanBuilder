@@ -6,16 +6,91 @@
     <title>Display Plans</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="icon" href="https://memberportal.net/wp-content/uploads/2019/01/favicon.png" type="image/png"/>
+    <style>
+        .sortable:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .arrow {
+            display: inline-block;
+            margin-left: 5px;
+        }
+    </style>
+    <style>
+        .sortable:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .arrow {
+            display: inline-block;
+            margin-left: 5px;
+        }
+    </style>
+    <script>
+        var sortOrderTitle = 'asc';
+        var sortOrderCode = 'asc';
+    
+        function sortTableByTitle() {
+            sortTable(1, 'Title');
+        }
+    
+        function sortTableByCode() {
+            sortTable(0, 'Code');
+        }
+    
+        function sortTable(columnIndex, columnType) {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementsByTagName("table")[0];
+            switching = true;
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("td")[columnIndex].textContent;
+                    y = rows[i + 1].getElementsByTagName("td")[columnIndex].textContent;
+                    if ((columnType === 'Title' && sortOrderTitle === 'asc' && x.toLowerCase() > y.toLowerCase()) ||
+                        (columnType === 'Title' && sortOrderTitle === 'desc' && x.toLowerCase() < y.toLowerCase()) ||
+                        (columnType === 'Code' && sortOrderCode === 'asc' && x.toLowerCase() > y.toLowerCase()) ||
+                        (columnType === 'Code' && sortOrderCode === 'desc' && x.toLowerCase() < y.toLowerCase())) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+            if (columnType === 'Title') {
+                sortOrderTitle = (sortOrderTitle === 'asc') ? 'desc' : 'asc';
+                updateArrow('Title');
+            } else if (columnType === 'Code') {
+                sortOrderCode = (sortOrderCode === 'asc') ? 'desc' : 'asc';
+                updateArrow('Code');
+            }
+        }
+    
+        function updateArrow(columnType) {
+            var arrowTitle = document.getElementById('sortArrowTitle');
+            var arrowCode = document.getElementById('sortArrowCode');
+            if (columnType === 'Title') {
+                arrowTitle.innerHTML = sortOrderTitle === 'asc' ? 'v' : '^';
+            } else if (columnType === 'Code') {
+                arrowCode.innerHTML = sortOrderCode === 'asc' ? 'v' : '^';
+            }
+        }
+    </script>
+    
 </head>
 <body>
-    
     <div class="table-container">
         <img class="logo" src="https://memberportal.net/wp-content/uploads/2018/12/mp-header.png" alt="MTM, Inc."/>
         <table>
             <thead>
                 <tr>
-                    <th>Code</th>
-                    <th>Title</th>
+                    <th class="sortable" onclick="sortTableByCode()">Code <span id="sortArrowCode" class="arrow">^</span></th>
+                    <th class="sortable" onclick="sortTableByTitle()">Title <span id="sortArrowTitle" class="arrow">^</span></th>
                     <th>Url</th>
                     <th>Zip Code Count</th>
                 </tr>
@@ -42,6 +117,5 @@
             </tbody>
         </table>
     </div>
-
 </body>
 </html>
